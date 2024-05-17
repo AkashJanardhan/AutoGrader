@@ -6,6 +6,7 @@ import { useClerk } from '@clerk/clerk-react';
 function FileUploader() {
   const [file, setFile] = useState(null);
   const [results, setResults] = useState("");
+  const [bestScore, setBestScore] = useState("");
   const { session } = useClerk();
   const [token, setToken] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -42,7 +43,10 @@ function FileUploader() {
         'user-id' : session.user.primaryEmailAddress
       }
     })
-    .then(response => setResults(response.data.result))
+    .then(response => {
+        setResults(response.data.result);
+        setBestScore(response.data.bestScore);
+    })
     .catch(error => console.error('Error:', error));
   };
 
@@ -51,6 +55,7 @@ function FileUploader() {
       <input type="file" onChange={onFileChange} />
       <button onClick={onFileUpload}>Upload and Test</button>
       <pre>{results}</pre>
+      <pre>Best Score : {bestScore}</pre>
     </div>
   );
 }
