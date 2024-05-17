@@ -1,0 +1,27 @@
+/* ProblemDescription.css */
+.problem-description {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.problem-description h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.problem-description p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.problem-description ul {
+    margin-top: 10px;
+}
+
+.problem-description li {
+    margin-bottom: 5px;
+}
