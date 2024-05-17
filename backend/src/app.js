@@ -77,9 +77,47 @@ app.post("/upload/", upload.single('file'), async (req, res) => {
         console.error('Error updating results:', error);
         return res.status(500).send("Error updating results.");
     }
-
-
 });
+
+app.post("/submit/", async (req, res) => {
+    const code = req.body.code;
+    const userId = req.headers['user-id'];
+    if (!code) {
+        return res.status(400).send("No code provided.");
+    }
+
+    try {
+        const result = await executePythonCode(code);
+        const score = calculateScore(result.passed, result.total);
+        const bestScore = await storeOrUpdateResults(userId, score);
+        res.json({ result: result, bestScore: bestScore });
+    } catch (error) {
+        console.error('Error executing code:', error);
+        res.status(500).send("Error executing code.");
+    }
+});
+
+async function executePythonCode(code) {
+    // Writing code to a temporary file and executing it or using a Python shell
+    return new Promise((resolve, reject) => {
+        const options = {
+            mode: 'text',
+            pythonOptions: ['-c'],
+            args: [code]
+        };
+        PythonShell.runString(code, options, (err, results) => {
+            if (err) reject(err);
+            resolve({
+                passed: parseResults(results),
+                total: 8  // Assuming 8 test cases
+            });
+        });
+    });
+}
+
+function calculateScore(passed, total) {
+    return (passed / total) * 100; // Calculate percentage score
+}
 
 function runTests(filePath, userId) {
     const testCases = fs.readFileSync('testcases.txt', 'utf8').split('\n');

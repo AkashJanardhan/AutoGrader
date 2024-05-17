@@ -20,7 +20,6 @@ function App() {
           <SignedIn>
             <Header />
             <div className="content">
-              <h1>Knight Attack Code</h1>
               <ProblemDescription />
               <FileUploader />
             </div>
@@ -49,21 +48,5 @@ function Header() {
     </div>
   );
 }
-
-// function LogoutButton() {
-//   const { signOut } = useClerk();
-
-//   const handleLogout = async () => {
-//     try {
-//       await signOut();
-//     } catch (error) {
-//       console.error('Failed to log out:', error);
-//     }
-//   };
-
-//   return (
-//     <button onClick={handleLogout}>Logout</button>
-//   );
-// }
 
 export default App;
