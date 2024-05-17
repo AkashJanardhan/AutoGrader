@@ -35,7 +35,7 @@ function FileUploader() {
     console.log("Akash session id",sessionId);
     formData.append("file", file);
 
-    axios.post("http://localhost:3001/upload/", formData, {
+    axios.post("http://18.237.76.206:3001/upload/", formData, {
       headers: {
         'Authorization': token,
         'Content-Type': 'multipart/form-data',

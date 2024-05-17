@@ -9,7 +9,8 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const clerkClient = createClerkClient({ apiKey: process.env.CLERK_API_KEY });
+//const clerkClient = createClerkClient({ apiKey: process.env.CLERK_API_KEY });
+const clerkClient = createClerkClient({ apiKey: "sk_test_bKrAMO0VxEZGPKgQVzWm2MUws7o9tYJg3tn3Pe5LxW" });
 //const client = new MongoClient(process.env.MONGODB_URI);
 const client = new MongoClient("mongodb+srv://akashjanardhan:QqwKS36D2KhA5QZa@cluster0.ku5pw7r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
@@ -27,7 +28,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization", "Session-Id", 'user-id']
