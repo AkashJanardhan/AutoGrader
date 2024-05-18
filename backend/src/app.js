@@ -144,7 +144,7 @@ function runTests(filePath, userId) {
                 results.push(`test_${index.toString().padStart(2, '0')} [PASS] ${duration}ms`);
                 passedCount++;
             } else {
-                results.push(`test_${index.toString().padStart(2, '0')} [FAIL] ${duration}ms Error1`);
+                results.push(`test_${index.toString().padStart(2, '0')} [FAIL] ${duration}ms`);
             }
         } catch (err) {
             if (err.message.includes('spawnSync /bin/sh ETIMEDOUT')) {
