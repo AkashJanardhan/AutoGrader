@@ -28,10 +28,28 @@
   color: #61dafb;
 }
 
-/* App.css */
 .app-container {
-  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;  /* Use full viewport height */
 }
+
+.content {
+  display: flex;
+  flex-grow: 1;  /* Allow content to take up available space */
+  overflow: hidden;  /* Prevents additional scrolling from the container */
+}
+
+.left-panel, .right-panel {
+  flex: 1;  /* Each panel takes up half the space of the container */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  padding: 20px;  /* Add some padding */
+}
+
+.left-panel {
+  border-right: 1px solid #ccc;  /* A line between the two panels */
+}
+
 
 .header {
   display: flex;
@@ -59,11 +77,6 @@
 
 .logout-button:hover {
   background-color: #0056b3;
-}
-
-.content {
-  padding: 20px;
-  margin-top: 10px;
 }
 
 

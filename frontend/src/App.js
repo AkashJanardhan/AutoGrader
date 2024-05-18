@@ -20,8 +20,12 @@ function App() {
           <SignedIn>
             <Header />
             <div className="content">
-              <ProblemDescription />
-              <FileUploader />
+              <div className="left-panel">
+                <ProblemDescription />
+              </div>
+              <div className="right-panel">
+                <FileUploader />
+              </div>
             </div>
           </SignedIn>
           <SignedOut>
@@ -40,7 +44,7 @@ function Header() {
   return (
     <div className="header">
       <div className="user-details">
-        Welcome, {user?.firstName || 'User'}!
+        Welcome, {user?.firstName || 'User'}
       </div>
       <button onClick={() => signOut()} className="logout-button">
         Logout
