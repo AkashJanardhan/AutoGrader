@@ -28,9 +28,11 @@ function App() {
               </div>
             </div>
           </SignedIn>
-          <SignedOut>
-            <SignIn />
-          </SignedOut>
+          <div className="sign-out-container">
+            <SignedOut>
+              <SignIn />
+            </SignedOut>
+          </div>
         </div>
       </Router>
     </ClerkProvider>

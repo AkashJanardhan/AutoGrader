@@ -34,6 +34,13 @@
   height: 100vh;  /* Use full viewport height */
 }
 
+.sign-out-container {
+  width: 100%;  /* Full width to center align easier */
+  display: flex;
+  justify-content: center;  /* Center content horizontally */
+  align-items: center;  /* Center content vertically */
+}
+
 .content {
   display: flex;
   flex-grow: 1;  /* Allow content to take up available space */

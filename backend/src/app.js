@@ -132,25 +132,35 @@ function runTests(filePath, userId) {
         const [n, kr, kc, pr, pc, expected] = parts;
         const startTime = Date.now();
         const command = `python3 ${filePath} ${n} ${kr} ${kc} ${pr} ${pc}`;
+        var timeout = false;
         try {
-            const result = execSync(command).toString().trim();
+            const result = execSync(command, {
+                timeout: 2000,  // 2000 milliseconds = 2 seconds
+            }).toString().trim();
+
             const duration = Date.now() - startTime;
-            const resultText = result === expected ?
-                `test_${index.toString().padStart(2, '0')} [PASS] ${duration}ms` :
-                `test_${index.toString().padStart(2, '0')} [FAIL] ${duration}ms`;
-            results.push(resultText);
-            if (result === expected) passedCount++;
+            if (duration > 1999) { timeout = true; }
+            if (result === expected) {
+                results.push(`test_${index.toString().padStart(2, '0')} [PASS] ${duration}ms`);
+                passedCount++;
+            } else {
+                results.push(`test_${index.toString().padStart(2, '0')} [FAIL] ${duration}ms Error1`);
+            }
         } catch (err) {
-            results.push(`test_${index.toString().padStart(2, '0')} [ERROR] ${err.message}`);
+            if (err.message.includes('spawnSync /bin/sh ETIMEDOUT')) {
+                results.push(`test_${index.toString().padStart(2, '0')} [FAIL] Timeout`);
+            } else {
+                results.push(`test_${index.toString().padStart(2, '0')} [FAIL] Error`);
+            }
         }
     });
 
-    //storeResults(userId, (passedCount / 8) * 100);
-
     output += results.join("\n");
     output += `\n> ${passedCount}/${testCases.length} tests passed`;
-    return {output:output, passedCount:passedCount};
+    output += `\n> Score : ${(passedCount / testCases.length) * 100}%`;
+    return { output: output, passedCount: passedCount };
 }
+
 
 async function storeOrUpdateResults(email, score) {
     try {
@@ -163,11 +173,11 @@ async function storeOrUpdateResults(email, score) {
         return existingRecord.score;  // Return existing best score
       } else {
         await resultsCollection.insertOne({ email, score });
-        return score;  // New entry, so this is the best score
+        return score;  
       }
     } catch (error) {
       console.error('Database operation failed', error);
-      throw error;  // Re-throw to handle it in the calling function
+      throw error;  
     }
   }
   
